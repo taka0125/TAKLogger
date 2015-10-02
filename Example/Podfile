@@ -1,0 +1,12 @@
+source 'https://github.com/CocoaPods/Specs.git'
+use_frameworks!
+
+target 'TAKLogger_Example', :exclusive => true do
+  pod "TAKLogger", :path => "../"
+end
+
+target 'TAKLogger_Tests', :exclusive => true do
+  pod "TAKLogger", :path => "../"
+
+  
+end

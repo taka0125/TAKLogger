@@ -1,0 +1,14 @@
+PODS:
+  - TAKLogger (1.0.0)
+
+DEPENDENCIES:
+  - TAKLogger (from `../`)
+
+EXTERNAL SOURCES:
+  TAKLogger:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  TAKLogger: 86bd07428b658a92fe88201291baeebec3404f16
+
+COCOAPODS: 0.38.2

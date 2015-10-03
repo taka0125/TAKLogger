@@ -7,6 +7,10 @@
 //  Released under the MIT license.
 //
 
+#if os(iOS)
+  import UIKit
+#endif
+
 public extension TAKLogger {
   public class XcodeColorLogFormatter: LogFormattable {
     private static let DateFormatter: NSDateFormatter = {
@@ -21,10 +25,16 @@ public extension TAKLogger {
       static let Reset = Escape + ";"
     }
     
-    private let foregroundColors: [TAKLogger.Severity: UIColor]?
-    private let backgroundColors: [TAKLogger.Severity: UIColor]?
-    
-    public init(foregroundColors: [TAKLogger.Severity: UIColor]?, backgroundColors: [TAKLogger.Severity: UIColor]?) {
+    #if os(iOS)
+    public typealias Color = UIColor
+    #elseif os(OSX)
+    public typealias Color = NSColor
+    #endif
+
+    private let foregroundColors: [TAKLogger.Severity: Color]?
+    private let backgroundColors: [TAKLogger.Severity: Color]?
+
+    public init(foregroundColors: [TAKLogger.Severity: Color]?, backgroundColors: [TAKLogger.Severity: Color]?) {
       self.foregroundColors = foregroundColors
       self.backgroundColors = backgroundColors
     }
@@ -59,7 +69,7 @@ public extension TAKLogger {
       return nil
     }
     
-    private func parseRGB(color: UIColor) -> (Int, Int, Int) {
+    private func parseRGB(color: Color) -> (Int, Int, Int) {
       var fRed: CGFloat = 0
       var fGreen: CGFloat = 0
       var fBlue: CGFloat = 0

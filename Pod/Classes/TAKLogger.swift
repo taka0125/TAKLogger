@@ -8,7 +8,6 @@
 //
 
 import Foundation
-import UIKit
 
 public protocol LogFormattable {
   func call(severity: TAKLogger.Severity, time: NSDate, message: String)
@@ -31,6 +30,34 @@ public final class TAKLogger {
   
   private init() {
   }
+  
+  // MARK: - class func
+  
+  public class func debug(message: String) {
+    sharedInstance.debug(message)
+  }
+  
+  public class func info(message: String) {
+    sharedInstance.info(message)
+  }
+  
+  public class func warn(message: String) {
+    sharedInstance.warn(message)
+  }
+  
+  public class func error(message: String) {
+    sharedInstance.error(message)
+  }
+  
+  public class func fatal(message: String) {
+    sharedInstance.fatal(message)
+  }
+  
+  public class func unknown(message: String) {
+    sharedInstance.unknown(message)
+  }
+
+  // MARK: - func
   
   public func debug(message: String) {
     write(.Debug, message)

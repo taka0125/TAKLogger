@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "TAKLogger"
-  s.version          = "1.3.0"
+  s.version          = "2.0.0"
   s.summary          = "Logger"
   s.homepage         = "https://github.com/taka0125/TAKLogger"
   s.license          = 'MIT'

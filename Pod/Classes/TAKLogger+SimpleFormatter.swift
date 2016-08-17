@@ -12,25 +12,25 @@ public extension TAKLogger {
     public init() {
     }
     
-    private static let DateFormatter: NSDateFormatter = {
-      let f = NSDateFormatter()
-      f.formatterBehavior = .Behavior10_4
+    fileprivate static let DateFormatter: Foundation.DateFormatter = {
+      let f = Foundation.DateFormatter()
+      f.formatterBehavior = .behavior10_4
       f.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
       return f
     }()
     
-    public func call(severity: TAKLogger.Severity, time: NSDate, message: String) {
-      print("[\(label(severity))][\(SimpleFormatter.DateFormatter.stringFromDate(time))] \(message)")
+    public func call(_ severity: TAKLogger.Severity, time: Date, message: String) {
+      print("[\(label(severity))][\(SimpleFormatter.DateFormatter.string(from: time))] \(message)")
     }
     
-    private func label(severity: TAKLogger.Severity) -> String {
+    fileprivate func label(_ severity: TAKLogger.Severity) -> String {
       switch severity {
-      case .Debug: return "D"
-      case .Info: return "I"
-      case .Warn: return "W"
-      case .Error: return "E"
-      case .Fatal: return "F"
-      case .Unknown: return "U"
+      case .debug: return "D"
+      case .info: return "I"
+      case .warn: return "W"
+      case .error: return "E"
+      case .fatal: return "F"
+      case .unknown: return "U"
       }
     }
   }

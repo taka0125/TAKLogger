@@ -11,6 +11,8 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '8.0'
   s.osx.deployment_target = '10.9'
 
+  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '3.0' }
+
   s.requires_arc = true
 
   s.source_files = 'Pod/Classes/**/*'

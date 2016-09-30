@@ -18,8 +18,8 @@ class ViewController: UIViewController {
     xcodeColorLoggerSample()
   }
   
-  private func simpleLoggerSample() {
-    TAKLogger.level = .Debug
+  fileprivate func simpleLoggerSample() {
+    TAKLogger.level = .debug
     TAKLogger.formatter = TAKLogger.SimpleFormatter()
     
     TAKLogger.debug("Debug Message")
@@ -29,24 +29,24 @@ class ViewController: UIViewController {
     TAKLogger.unknown("Fatal Message")
   }
   
-  private func xcodeColorLoggerSample() {
+  fileprivate func xcodeColorLoggerSample() {
     setenv("XcodeColors", "YES", 0)
     
     let foregroundColors: [TAKLogger.Severity : UIColor] = [
-      .Debug: UIColor.grayColor(),
-      .Info: UIColor.blueColor(),
-      .Warn: UIColor.yellowColor(),
-      .Error: UIColor.redColor()
+      .debug: UIColor.gray,
+      .info: UIColor.blue,
+      .warn: UIColor.yellow,
+      .error: UIColor.red
     ]
     
     let backgroundColors: [TAKLogger.Severity : UIColor] = [
-      .Debug: UIColor.redColor(),
-      .Info: UIColor.yellowColor(),
-      .Warn: UIColor.blueColor(),
-      .Error: UIColor.grayColor()
+      .debug: UIColor.red,
+      .info: UIColor.yellow,
+      .warn: UIColor.blue,
+      .error: UIColor.gray
     ]
     
-    TAKLogger.level = .Debug
+    TAKLogger.level = .debug
     TAKLogger.formatter = TAKLogger.XcodeColorLogFormatter(foregroundColors: foregroundColors, backgroundColors: backgroundColors)
     TAKLogger.debug("Debug Message")
     TAKLogger.info("Info Message")

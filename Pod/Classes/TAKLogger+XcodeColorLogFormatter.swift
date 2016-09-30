@@ -13,14 +13,14 @@
 
 public extension TAKLogger {
   public class XcodeColorLogFormatter: LogFormattable {
-    private static let DateFormatter: NSDateFormatter = {
-      let f = NSDateFormatter()
-      f.formatterBehavior = .Behavior10_4
+    fileprivate static let DateFormatter: Foundation.DateFormatter = {
+      let f = Foundation.DateFormatter()
+      f.formatterBehavior = .behavior10_4
       f.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
       return f
     }()
     
-    private struct Const {
+    fileprivate struct Const {
       static let Escape = "\u{001b}["
       static let Reset = Escape + ";"
     }
@@ -31,19 +31,19 @@ public extension TAKLogger {
     public typealias Color = NSColor
     #endif
 
-    private let foregroundColors: [TAKLogger.Severity: Color]?
-    private let backgroundColors: [TAKLogger.Severity: Color]?
+    fileprivate let foregroundColors: [TAKLogger.Severity: Color]?
+    fileprivate let backgroundColors: [TAKLogger.Severity: Color]?
 
     public init(foregroundColors: [TAKLogger.Severity: Color]?, backgroundColors: [TAKLogger.Severity: Color]?) {
       self.foregroundColors = foregroundColors
       self.backgroundColors = backgroundColors
     }
     
-    public func call(severity: TAKLogger.Severity, time: NSDate, message: String) {
+    open func call(_ severity: TAKLogger.Severity, time: Date, message: String) {
       let fg = foregroundColorString(severity)
       let bg = backgroundColorString(severity)
       
-      var string = "[\(label(severity))][\(XcodeColorLogFormatter.DateFormatter.stringFromDate(time))] \(message)"
+      var string = "[\(label(severity))][\(XcodeColorLogFormatter.DateFormatter.string(from: time))] \(message)"
       if fg != nil || bg != nil {
         let foreground = fg ?? ""
         let background = bg ?? ""
@@ -53,7 +53,7 @@ public extension TAKLogger {
       print(string)
     }
     
-    private func foregroundColorString(severity: TAKLogger.Severity) -> String? {
+    fileprivate func foregroundColorString(_ severity: TAKLogger.Severity) -> String? {
       if let color = foregroundColors?[severity] {
         let (r, g, b) = parseRGB(color)
         return "\(Const.Escape)fg\(r),\(g),\(b);"
@@ -61,7 +61,7 @@ public extension TAKLogger {
       return nil
     }
     
-    private func backgroundColorString(severity: TAKLogger.Severity) -> String? {
+    fileprivate func backgroundColorString(_ severity: TAKLogger.Severity) -> String? {
       if let color = backgroundColors?[severity] {
         let (r, g, b) = parseRGB(color)
         return "\(Const.Escape)bg\(r),\(g),\(b);"
@@ -69,7 +69,7 @@ public extension TAKLogger {
       return nil
     }
     
-    private func parseRGB(color: Color) -> (Int, Int, Int) {
+    fileprivate func parseRGB(_ color: Color) -> (Int, Int, Int) {
       var fRed: CGFloat = 0
       var fGreen: CGFloat = 0
       var fBlue: CGFloat = 0
@@ -83,14 +83,14 @@ public extension TAKLogger {
       return (red, green, blue)
     }
     
-    private func label(severity: TAKLogger.Severity) -> String {
+    fileprivate func label(_ severity: TAKLogger.Severity) -> String {
       switch severity {
-      case .Debug: return "D"
-      case .Info: return "I"
-      case .Warn: return "W"
-      case .Error: return "E"
-      case .Fatal: return "F"
-      case .Unknown: return "U"
+      case .debug: return "D"
+      case .info: return "I"
+      case .warn: return "W"
+      case .error: return "E"
+      case .fatal: return "F"
+      case .unknown: return "U"
       }
     }
   }

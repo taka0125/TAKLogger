@@ -13,9 +13,7 @@ public protocol LogFormattable {
   func call(severity: TAKLogger.Severity, time: NSDate, message: String)
 }
 
-public final class TAKLogger {
-  public static let sharedInstance = TAKLogger()
-  
+public struct TAKLogger {
   public enum Severity: Int {
     case Debug = 0
     case Info = 1
@@ -25,67 +23,40 @@ public final class TAKLogger {
     case Unknown = 5    
   }
   
-  public var level: Severity = .Unknown
-  public var formatter: LogFormattable = SimpleFormatter()
-  
-  private init() {
-  }
+  public static var level: Severity = .Unknown
+  public static var formatter: LogFormattable = SimpleFormatter()
   
   // MARK: - class func
   
-  public class func debug(message: String) {
-    sharedInstance.debug(message)
-  }
-  
-  public class func info(message: String) {
-    sharedInstance.info(message)
-  }
-  
-  public class func warn(message: String) {
-    sharedInstance.warn(message)
-  }
-  
-  public class func error(message: String) {
-    sharedInstance.error(message)
-  }
-  
-  public class func fatal(message: String) {
-    sharedInstance.fatal(message)
-  }
-  
-  public class func unknown(message: String) {
-    sharedInstance.unknown(message)
+  public static func debug(object: AnyObject) {
+    write(.Debug, "\(object)")
   }
 
-  // MARK: - func
-  
-  public func debug(message: String) {
-    write(.Debug, message)
+  public static func info(object: AnyObject) {
+    write(.Info, "\(object)")
   }
   
-  public func info(message: String) {
-    write(.Info, message)
+  public static func warn(object: AnyObject) {
+    write(.Warn, "\(object)")
   }
   
-  public func warn(message: String) {
-    write(.Warn, message)
+  public static func error(object: AnyObject) {
+    write(.Error, "\(object)")
   }
   
-  public func error(message: String) {
-    write(.Error, message)
+  public static func fatal(object: AnyObject) {
+    write(.Fatal, "\(object)")
   }
   
-  public func fatal(message: String) {
-    write(.Fatal, message)
+  public static func unknown(object: AnyObject) {
+    write(.Unknown, "\(object)")
   }
-  
-  public func unknown(message: String) {
-    write(.Unknown, message)
-  }
-  
-  // MARK: - Private Methods
-  
-  private func write(severity: Severity, _ message: String) {
+}
+
+// MARK: - Private Methods
+
+extension TAKLogger {
+  private static func write(severity: Severity, _ message: String) {
     if level.rawValue > severity.rawValue { return }
     formatter.call(severity, time: NSDate(), message: message)
   }

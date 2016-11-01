@@ -1,0 +1,6 @@
+framework module TAKLogger {
+  umbrella header "TAKLogger-umbrella.h"
+
+  export *
+  module * { export * }
+}
